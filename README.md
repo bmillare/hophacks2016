@@ -17,3 +17,9 @@ Have keyword phrases of any text piece represent nodes, and all phrases within t
 - [ ] Re-write src/hophacks2016/rake.clj as rake2.clj but using opennlp instead of the homebrew code for sentence breakdown
 - [ ] use openNLP POS to filter out bad keyword phrase candidates
       - use https://github.com/davidadamojr/TextRank to see how they use POS to make better decisions
+
+## phases
+- [ ] 1. Implement an accurate enough keyword phrase extraction method
+- [ ] 2. Download corpus to desktop computer
+- [ ] 3. Parse & generate keyword phrase graph edge data and write to disk (design custom output format? or use EDN?)
+- [ ] 4. Graph analysis (rank relatedness delta per year)
