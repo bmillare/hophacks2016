@@ -11,3 +11,4 @@ Have keyword phrases of any text piece represent nodes, and all phrases within t
 - Currently, RAKE is implemented to extract the keywords but the accuracy is low, I think adding some context with parts of speech might help, also we can try to also implement or mix in TextRank
   - I would prefer not having to use supervised approaches at the moment
   - We will probably need to look at OpenNLP to take advantage of POS tools in Clojure https://opennlp.apache.org/
+    - https://github.com/dakrone/clojure-opennlp
