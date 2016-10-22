@@ -20,6 +20,6 @@ Have keyword phrases of any text piece represent nodes, and all phrases within t
 
 ## phases
 - [ ] 1. Implement an accurate enough keyword phrase extraction method
-- [ ] 2. Download corpus to desktop computer
+- [X] 2. Download corpus to desktop computer
 - [ ] 3. Parse & generate keyword phrase graph edge data and write to disk (design custom output format? or use EDN?)
 - [ ] 4. Graph analysis (rank relatedness delta per year)
