@@ -12,3 +12,8 @@ Have keyword phrases of any text piece represent nodes, and all phrases within t
   - I would prefer not having to use supervised approaches at the moment
   - We will probably need to look at OpenNLP to take advantage of POS tools in Clojure https://opennlp.apache.org/
     - https://github.com/dakrone/clojure-opennlp
+
+## tasks
+- [ ] Re-write src/hophacks2016/rake.clj as rake2.clj but using opennlp instead of the homebrew code for sentence breakdown
+- [ ] use openNLP POS to filter out bad keyword phrase candidates
+      - use https://github.com/davidadamojr/TextRank to see how they use POS to make better decisions
