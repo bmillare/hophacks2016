@@ -1,4 +1,16 @@
-(ns v.hophacks2016.rake)
+(ns v.hophacks2016.rake
+  (:require [clojure.string :as string]))
+
+(comment
+  (do (require '[v.hophacks2016.rake :as rake]
+       '[dj.dependencies])
+    (dj.dependencies/add-dependencies '[[clojure-opennlp "0.3.3"]]
+      {:dj/repositories {"central" "http://repo1.maven.org/maven2/"
+                         "clojars" "http://clojars.org/repo"}})
+   (require '[opennlp.nlp :as nlp]))
+
+  (nlp/make-sentence-detector "v/models/en-sent.bin")
+)
 
 (defn is-number [txt]
   (re-matches #"\d+(?:\.\d+)?" txt))
@@ -95,6 +107,19 @@
                               0
                               words))
                (rest phrases'))))))
+
+(defn extract-text [text]
+  ":keywords = vector of keywords.
+   :body = most stuff.
+   :refs = the citations."
+  {:keywords 
+    (let [first-section (first (string/split text #"\n==== Body"))
+          keyword-line (last (string/split first-section #"\n"))]
+      (into [] (re-seq #"[A-Z]+[^A-Z]+" keyword-line)))
+   :body (first (string/split text #"\n==== Refs"))
+   :refs (let [refblock (second (string/split text #"\n==== Refs\n"))
+               reflines (into [] (re-seq #"[0-9]+[^\n]+\n" refblock))]
+           (mapv #(subs %1 (inc (count (str (inc %2)))) (dec (count %1))) reflines (range)))}) ; remove the numbers.
 
 (comment
   "This is the beginning of the depolarization extent of the babel fish. Increasing depolarization extent decreases Oscillation frequency of SO_stim is neutral."
