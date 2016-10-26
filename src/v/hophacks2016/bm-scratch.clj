@@ -30,9 +30,11 @@
                          (v.hophacks2016.rake2/stop-word-regex))
         txt (dj.io/eat (dj.io/file "/home/bmillare/dj/usr/store/code-countries/scratch/hophacks2016/w2167e.txt"))
         sentences (map (fn [s]
-                         (subs s 0 (dec (count s)))) (get-sentences txt))
-        candidates (v.hophacks2016.rake2/generate-candidate-keywords sentences
-                                                stop-word-re)
+                         (subs s 0 (dec (count s))))
+                       (get-sentences txt))
+        candidates (v.hophacks2016.rake2/generate-candidate-keywords
+                    sentences
+                    stop-word-re)
         w-scores (v.hophacks2016.rake2/word-scores candidates)
         k-scores (v.hophacks2016.rake2/candidate-keyword-scores candidates w-scores)]
 
