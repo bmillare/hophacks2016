@@ -8,6 +8,9 @@
 ;; I think the key insights are optimized (faster/simpler) tagging and
 ;; then custom noun-phrase chunking
 
+;; Main point is to not do full parsing that identifies VP in addition
+;; to NP and all the other stuff, but to just quickly scan for NP
+
 (def path-prefix (case (System/getProperty "user.dir")
                    "/home/bmillare/dj/usr/src/dj.scratch"
                    "/home/bmillare/dj/usr/src/hophacks2016/src/v"))
