@@ -2,6 +2,8 @@
                                   {:dj/repositories {"central" "http://repo1.maven.org/maven2/",
                                                      "clojars" "http://clojars.org/repo"}})
 
+(dj.classloader/add-classpath (dj.io/file "/home/bmillare/dj/usr/src/hophacks2016/src"))
+
 (require '[opennlp.nlp :as nlp])
 
 (def get-sentences (nlp/make-sentence-detector "/home/bmillare/dj/usr/src/hophacks2016/en-sent.bin"))
