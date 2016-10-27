@@ -14,7 +14,7 @@ Have keyword phrases of any text piece represent nodes, and all phrases within t
 - [X] Re-write src/hophacks2016/rake.clj as rake2.clj but using opennlp instead of the homebrew code for sentence breakdown
 - [X] use openNLP POS to filter out bad keyword phrase candidates
       - use https://github.com/davidadamojr/TextRank to see how they use POS to make better decisions
-- [ ] Add stemming and normalizing to keyword extractor (low priority)
+- [ ] Add normalization such as stemming and lemmatisation to keyword extractor (low priority)
 
 ## phases
 - [X] 1. Implement an accurate enough keyword phrase extraction method
