@@ -24,7 +24,7 @@
    {:keyword.opennlp.input/models-prefix
     "/home/bmillare/dj/usr/src/hophacks2016/src/v/models"
     :keyword.input/txt
-    (dj.io/eat (dj.io/file "/home/bmillare/dj/usr/src/hophacks2016/src/v/models/wl.txt"))
+    (dj.io/eat (dj.io/file "/home/bmillare/dj/usr/store/code-countries/scratch/hophacks2016/w2167e.txt"))
     #_"Optical control of the heart muscle is a promising strategy for cardiology because it is more specific than traditional electrical stimulation, and allows a higher temporal resolution than pharmacological interventions. Anion channelrhodopsins (ACRs) from cryptophyte algae expressed in cultured neonatal rat ventricular cardiomyocytes produced inhibitory currents at less than one-thousandth of the light intensity required by previously available optogenetic tools, such as the proton pump archaerhodopsin-3 (Arch). Because of their greater photocurrents, ACRs permitted complete inhibition of cardiomyocyte electrical activity under conditions in which Arch was inefficient. Most importantly, ACR expression allowed precisely controlled shortening of the action potential duration by switching on the light during its repolarization phase, which was not possible with previously used optogenetic tools. Optical shortening of cardiac action potentials may benefit pathophysiology research and the development of optogenetic treatments for cardiac disorders such as the long QT syndrome."
     #_"Upper bounds for components of a minimal set of solutions and algorithms of construction of minimal generating sets of solutions for all types of systems are given."
     #_"The angry dog is walking across the street. Patrick has never had a donut."

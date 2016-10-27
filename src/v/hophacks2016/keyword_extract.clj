@@ -119,25 +119,27 @@
 (def keyword-connectivity
   {:keyword.connectivity/connectivity
    (tf/fm [:keyword.opennlp/tokenized-sentences]
-          (loop [words (apply concat tokenized-sentences)
-                 inrange {}]
-            ;; Words are connected if within two tagged items (e.g. a word or punctuation)
-            (if (< (count words) 3)
-              inrange
-              (recur (rest words)
-                     (let [w1 (first words)
-                           w2 (second words)
-                           w3 (nth words 2)]
-                       (-> inrange
-                           (update w1 (fn [touching]
-                                        (-> (or touching #{})
-                                            (conj w2 w3))))
-                           (update w2 (fn [touching]
-                                        (-> (or touching #{})
-                                            (conj w1 w3))))
-                           (update w3 (fn [touching]
-                                        (-> (or touching #{})
-                                            (conj w1 w3))))))))))
+          ;; using a vec up front is SOOO much faster
+          (let [all-words (vec (apply concat tokenized-sentences))
+                stop-n (- (count all-words) 3)]
+            (loop [n 0
+                   inrange (reduce (fn [ret w]
+                                     (assoc! ret
+                                             w
+                                             #{}))
+                                   (transient {})
+                                   all-words)]
+              ;; Words are connected if within two tagged items (e.g. a word or punctuation)
+              (if (< n stop-n)
+                (let [w1 (all-words n)
+                      w2 (all-words (inc n))
+                      w3 (all-words (+ n 2))]
+                  (recur (inc n)
+                         (-> inrange
+                             (assoc! w1 (conj (inrange w1) w2 w3))
+                             (assoc! w2 (conj (inrange w2) w1 w3))
+                             (assoc! w3 (conj (inrange w3) w1 w2)))))
+                (persistent! inrange)))))
    :keyword.connectivity/filtered
    (tf/fm [:keyword.connectivity/connectivity
            :keyword.candidates/set-candidate-words]
