@@ -263,7 +263,7 @@ tility. The last 10 years have provided insights into the regulation and role of
 driven by studies of mice in which the protein determinants of channel activity have been deleted or modified. As
 yet, few human diseases have been correlated with altered muscle K ATP activity, but genetically modified animals
 give important insights to likely pathological roles of aberrant channel activity in different muscle types."
-      "Mitochondrial membrane potential (⌬⌿ m ) depolarization
+      #_"Mitochondrial membrane potential (⌬⌿ m ) depolarization
 contributes to cell death and electrical and contractile dysfunc-
 tion in the post-ischemic heart. An imbalance between mito-
 chondrial reactive oxygen species production and scavenging
@@ -296,6 +296,7 @@ regeneration or replenishment was crucial. The results indicate
 that GSH/GSSG redox status governs the sequential opening of
 mitochondrial ion channels (IMAC before PTP) triggered by
 thiol oxidation in cardiomyocytes."
+      "With the goal of non-invasively localizing cardiac ischemic disease using body-surface potential recordings, we attempted to reconstruct the transmembrane potential (TMP) throughout the myocardium with the bidomain heart model. The task is an inverse source problem governed by partial differential equations (PDE). Our main contribution is solving the inverse problem within a PDE-constrained optimization framework that enables various physically-based constraints in both equality and inequality forms. We formulated the optimality conditions rigorously in the continuum before deriving finite element discretization, thereby making the optimization independent of discretization choice. Such a formulation was derived for the L2-norm Tikhonov regularization and the total variation minimization. The subsequent numerical optimization was fulfilled by a primal–dual interior-point method tailored to our problem’s specific structure. Our simulations used realistic, fiber-included heart models consisting of up to 18,000 nodes, much finer than any inverse models previously reported. With synthetic ischemia data we localized ischemic regions with roughly a 10% false-negative rate or a 20% false-positive rate under conditions up to 5% input noise. With ischemia data measured from animal experiments, we reconstructed TMPs with roughly 0.9 correlation with the ground truth. While precisely estimating the TMP in general cases remains an open problem, our study shows the feasibility of reconstructing TMP during the ST interval as a means of ischemia localization"
       #_(dj.io/eat (dj.io/file "/home/bmillare/dj/usr/store/code-countries/scratch/hophacks2016/w2167e.txt"))
       gfns {:JJ (gf/fn #{} #{}
                   (peg/+ (peg/| (t "JJ") (t "JJR") (t "JJS") (t "VBG") (t "VBN"))))

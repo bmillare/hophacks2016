@@ -30,6 +30,21 @@
                   0
                   (keys (connectivity id))))))
 
+(defn cached-weighted-score
+  [cache]
+  (fn [connectivity old-scores id]
+    (+ (- 1.0 d)
+       (* d (reduce (fn [ret nid]
+                      (let [weights (connectivity nid)]
+                        (+ ret
+                           (/ (* (weights id) (old-scores nid))
+                              (let [cache-value (@cache nid)]
+                                (if cache-value
+                                  cache-value
+                                  (reset! cache (reduce + 0.0 (vals weights)))))))))
+                    0
+                    (keys (connectivity id)))))))
+
 (defn score-graph
   [score-fn connectivity old-scores]
   (persistent!
