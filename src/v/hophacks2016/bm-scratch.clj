@@ -5,6 +5,7 @@
 (dj.classloader/add-classpath (dj.io/file "/home/bmillare/dj/usr/src/hophacks2016/src"))
 
 (require '[opennlp.nlp :as nlp])
+(require 'v.1.dispatch.treefn)
 
 (def get-keywords
   (v.1.dispatch.treefn/treefm
@@ -14,14 +15,23 @@
     v.hophacks2016.keyword-extract/keyword-candidates
     v.hophacks2016.keyword-extract/keyword-connectivity
     v.hophacks2016.keyword-extract/keyword-ranking)
-   :keyword.ranking/keywords))
+   :keyword.ranking/n-grams-ranking
+   #_:keyword.ranking/pagerank
+   #_:keyword.candidates/set-candidates))
 
 (def result
   (get-keywords
    {:keyword.opennlp.input/models-prefix
     "/home/bmillare/dj/usr/src/hophacks2016/src/v/models"
     :keyword.input/txt
-    "With the goal of non-invasively localizing cardiac ischemic disease using body-surface potential recordings, we attempted to reconstruct the transmembrane potential (TMP) throughout the myocardium with the bidomain heart model. The task is an inverse source problem governed by partial differential equations (PDE). Our main contribution is solving the inverse problem within a PDE-constrained optimization framework that enables various physically-based constraints in both equality and inequality forms. We formulated the optimality conditions rigorously in the continuum before deriving finite element discretization, thereby making the optimization independent of discretization choice. Such a formulation was derived for the L2-norm Tikhonov regularization and the total variation minimization. The subsequent numerical optimization was fulfilled by a primal–dual interior-point method tailored to our problem’s specific structure. Our simulations used realistic, fiber-included heart models consisting of up to 18,000 nodes, much finer than any inverse models previously reported. With synthetic ischemia data we localized ischemic regions with roughly a 10% false-negative rate or a 20% false-positive rate under conditions up to 5% input noise. With ischemia data measured from animal experiments, we reconstructed TMPs with roughly 0.9 correlation with the ground truth. While precisely estimating the TMP in general cases remains an open problem, our study shows the feasibility of reconstructing TMP during the ST interval as a means of ischemia localization"
+    "The mission of the Computational Cardiology Lab at the Institute for Computational Medicine, Johns Hopkins University is to develop and exploit cutting-edge computational tools to advance the understanding of the fundamental mechanisms that underlie rhythm and contractile disorders in the heart and to develop better strategies for prevention and treatment of these disorders.
+	Dr. Natalia Trayanova is a Professor in the Department of Biomedical Engineering and the Institute for Computational Medicine, and directs the Computational Cardiology Laboratory at Johns Hopkins University. Dr. Trayanova is the inaugural Murray B. Sachs Endowed Chair in Biomedical Engineering. In 2013, she received the NIH Director’s Pioneer Award for her project “Virtual Electrophysiology Laboratory”. Dr. Trayanova was also the inaugural William R. Brody Faculty Scholar at Johns Hopkins University. She is a Fellow of the Heart Rhythm Society, American Heart Association, Biomedical Engineering Society, and the American Institute for Medical and Biological Engineering.
+	The translational research in Dr. Trayanova’s Computational Cardiology Laboratory centers around improvement of the clinical therapies of defibrillation and atrial and ventricular ablation, and the risk stratification for arrhythmias using a personalized MRI-based simulation approach. The basic science research in Dr. Trayanova lab focuses on understanding the pathological electrophysiological and electromechanical behavior of the heart, with emphasis on the mechanisms for cardiac arrhythmogenesis and pump dysfunction. Research in Dr. Trayanova’s laboratory is supported by grants from NIH, NSF, and the American Heart Association. 
+	Dr. Trayanova has published extensively: as of September 2016 she is the author of over 230 peer-reviewed journal publications in prestigious journals (Science Translational Medicine, PNAS, Journal of Clinical Investigations, Nature Communications, Journal of American College of Cardiology, Circulation, Circulation Research, and others). Dr. Trayanova has presented at a large number of international meetings and has given numerous keynote and plenary lectures.
+	She and the members of her laboratory are the recipients of a large number of research awards. She has also received awards for excellence in teaching. Amongst her other professional activities, Dr. Trayanova serves currently as Associate Editor of the journals Heart Rhythm and Frontiers in Computational Physiology and Medicine; and is on the Editorial Board of a number of journals. Dr. Trayanova has served as a member of the NIH ESTA and MABS study sections as well as other study sections. Dr. Trayanova was the Vice-Chair in 2007 and the Chair in 2009 of the Gordon Research Conference on Cardiac Arrhythmia Mechanisms, and has served as a member of the program committee of a large number of international meetings. She currently serves on the FDA CIPA Steering Committee and the American Heart Association Research Funding Committee."
+    #_"Upper bounds for components of a minimal set of solutions and algorithms of construction of minimal generating sets of solutions for all types of systems are given."
+    #_"The angry dog is walking across the street. Patrick has never had a donut."
+ 
     :keyword.opennlp.input/tokenize-model-name
     "en-token"
     :keyword.opennlp.input/pos-model-name
@@ -30,7 +40,11 @@
     "en-sent"}
    ))
 
-(:keyword.ranking/keywords result)
+(def debug (atom nil))
+@debug
+(:keyword.ranking/n-grams-ranking result)
+(:keyword.ranking/pagerank result)
+(:keyword.candidates/set-candidates result)
 
 
 ;; ----------------------------------------------------------------------

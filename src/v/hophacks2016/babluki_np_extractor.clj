@@ -385,13 +385,13 @@ thiol oxidation in cardiomyocytes."
       keywords-rank (sort-by second >
                              (into []
                                    (comp
+                                    (filter (fn [words]
+                                              (and (> (count words) 1)
+                                                   (< (count words) 5))))
                                     (map (fn [words]
                                            [words (/ (apply + (map rankings-map
                                                                    words))
-                                                     (count words))]))
-                                    (filter (fn [[words _]]
-                                              (and (> (count words) 1)
-                                                   (< (count words) 5)))))
+                                                     (count words))])))
                                    set-candidates))
       #_#_keywords (filter (fn [words]
                          (and (some (set top) words)

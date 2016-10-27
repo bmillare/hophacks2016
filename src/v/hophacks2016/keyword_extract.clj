@@ -68,7 +68,7 @@
               input)))))
 
 (def np-chunking
-  {:keyword.np-chunking/parse
+  {:keyword.np-chunking/parse-fn
    (let [JJ (peg/+ (peg/| (t "JJ") (t "JJR") (t "JJS") (t "VBG") (t "VBN")))
          NN (peg/| (t "NN") (t "NNS"))
          NNI (peg/| (peg/+ NN)
@@ -87,12 +87,14 @@
                       (peg/alt (peg/+ ELSE)
                                (fn [_]
                                  nil)))]
-     (tf/fm [:keyword.np-chunking.input/pairs]
-            (peg/parse GETNP pairs)))})
+     (tf/fm []
+            (fn [pairs]
+              (peg/parse GETNP pairs))))})
 
 (def keyword-candidates
   {:keyword.candidates/candidates
-   (tf/fm [:keyword.opennlp/tokenized-sentences
+   (tf/fm [:keyword.np-chunking/parse-fn
+           :keyword.opennlp/tokenized-sentences
            :keyword.opennlp/tag-pos-fn]
           (reduce (fn [ret tokenized-sentence]
                     (into ret
@@ -100,7 +102,7 @@
                                  NPs []]
                             (if (empty? remaining-input)
                               NPs
-                              (let [{:keys [result unconsumed-input]} (quick-parse-np remaining-input)]
+                              (let [{:keys [result unconsumed-input]} (parse-fn remaining-input)]
                                 (recur unconsumed-input
                                        (if result
                                          (conj NPs (mapv first result))
@@ -167,19 +169,11 @@
           (sort-by second >
                    (into []
                          (comp
+                          (filter (fn [words]
+                                    (and (> (count words) 1)
+                                         (< (count words) 5))))
                           (map (fn [words]
                                  [words (/ (apply + (map pagerank
                                                          words))
-                                           (count words))]))
-                          (filter (fn [[words _]]
-                                    (and (> (count words) 1)
-                                         (< (count words) 5)))))
-                         set-candidates)))
-   :keyword.ranking/keywords
-   (tf/fm [:keyword.ranking/top-singular
-           :keyword.ranking/n-grams-ranking
-           :keyword.candidates/candidates]
-          (filter (fn [words]
-                         (and (some (set top-singular) words)
-                              (> (count words) 1)))
-                       candidates))})
+                                           (count words))])))
+                         set-candidates)))})
