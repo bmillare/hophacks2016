@@ -6,6 +6,35 @@
 
 (require '[opennlp.nlp :as nlp])
 
+(def get-keywords
+  (v.1.dispatch.treefn/treefm
+   (merge
+    v.hophacks2016.keyword-extract/open-nlp
+    v.hophacks2016.keyword-extract/np-chunking
+    v.hophacks2016.keyword-extract/keyword-candidates
+    v.hophacks2016.keyword-extract/keyword-connectivity
+    v.hophacks2016.keyword-extract/keyword-ranking)
+   :keyword.ranking/keywords))
+
+(def result
+  (get-keywords
+   {:keyword.opennlp.input/models-prefix
+    "/home/bmillare/dj/usr/src/hophacks2016/src/v/models"
+    :keyword.input/txt
+    "With the goal of non-invasively localizing cardiac ischemic disease using body-surface potential recordings, we attempted to reconstruct the transmembrane potential (TMP) throughout the myocardium with the bidomain heart model. The task is an inverse source problem governed by partial differential equations (PDE). Our main contribution is solving the inverse problem within a PDE-constrained optimization framework that enables various physically-based constraints in both equality and inequality forms. We formulated the optimality conditions rigorously in the continuum before deriving finite element discretization, thereby making the optimization independent of discretization choice. Such a formulation was derived for the L2-norm Tikhonov regularization and the total variation minimization. The subsequent numerical optimization was fulfilled by a primal–dual interior-point method tailored to our problem’s specific structure. Our simulations used realistic, fiber-included heart models consisting of up to 18,000 nodes, much finer than any inverse models previously reported. With synthetic ischemia data we localized ischemic regions with roughly a 10% false-negative rate or a 20% false-positive rate under conditions up to 5% input noise. With ischemia data measured from animal experiments, we reconstructed TMPs with roughly 0.9 correlation with the ground truth. While precisely estimating the TMP in general cases remains an open problem, our study shows the feasibility of reconstructing TMP during the ST interval as a means of ischemia localization"
+    :keyword.opennlp.input/tokenize-model-name
+    "en-token"
+    :keyword.opennlp.input/pos-model-name
+    "en-pos-maxent"
+    :keyword.opennlp.input/sentences-model-name
+    "en-sent"}
+   ))
+
+(:keyword.ranking/keywords result)
+
+
+;; ----------------------------------------------------------------------
+
 (def get-sentences (nlp/make-sentence-detector "/home/bmillare/dj/usr/src/hophacks2016/en-sent.bin"))
 
 (nlp/make-sentence-detector "v/models/en-sent.bin")
