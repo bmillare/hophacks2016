@@ -4,6 +4,20 @@ literature exploration utilities
 ## vision
 The long term vision is to build google maps for any body of literature
 
+## how to run
+
+```bash
+cd cooldirectory
+git clone https://github.com/bmillare/hophacks2016.git
+cd hophacks2016
+lein trampoline repl
+```
+
+```clojure
+(load "v/hophacks2016/bm-scratch")
+(:keyword.ranking/n-grams-ranking result)
+```
+
 ## implementation
 Have keyword phrases of any text piece represent nodes, and all phrases within this piece now have an edge to the other phrases within the piece. The more text pieces relate the keyword pharses, the stronger the weight of the edge. When we apply the technique to all text pieces and aggregate the results, we get a graph of relatedness between keyword phrases. As a simple first step analysis, we will try to see how keyword phrase relatedness changes over time by computing the difference in edge weights over time. Our corpus will be scientific abstracts pulled from each year from pubmed. ftp://ftp.ncbi.nlm.nih.gov/pub/pmc/oa_bulk/
 

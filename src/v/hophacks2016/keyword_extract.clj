@@ -1,5 +1,6 @@
 (ns v.hophacks2016.keyword-extract
-  (:require [opennlp.nlp :as nlp]
+  (:require [dj]
+            [opennlp.nlp :as nlp]
             [v.algorithms.pagerank :as pr]
             [v.algorithms.peg :as peg]
             [v.dispatch.treefn :as tf]
