@@ -1,8 +1,8 @@
 (ns v.hophacks2016.keyword-extract
   (:require [opennlp.nlp :as nlp]
-            [v.hophacks2016.pagerank :as pr]
-            [v.1.algorithms.peg :as peg]
-            [v.1.dispatch.treefn :as tf]
+            [v.algorithms.pagerank :as pr]
+            [v.algorithms.peg :as peg]
+            [v.dispatch.treefn :as tf]
             [clojure.set :as cs]))
 
 (defn suffix [model-name]
@@ -96,7 +96,7 @@
    (tf/fm [:keyword.np-chunking/parse-fn
            :keyword.opennlp/tokenized-sentences
            :keyword.opennlp/tag-pos-fn]
-          (reduce (fn [ret tokenized-sentence]
+          (reduce (fn add-NPs [ret tokenized-sentence]
                     (into ret
                           (loop [remaining-input (tag-pos-fn tokenized-sentence)
                                  NPs []]

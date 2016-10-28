@@ -1,6 +1,6 @@
 (ns v.dispatch.treefn
   (:require [clojure.set :as cs]
-            [v.1.algorithms.dag :as dag]))
+            [v.algorithms.dag :as dag]))
 
 (defmacro fm
   "adds dependency metadata to fn, uses map destructuring
@@ -22,7 +22,7 @@
                        (let [the-fn (temp-key fn-map)
                              dependents (-> the-fn
                                             meta
-                                            :v.1.dispatch.treefn/dependencies
+                                            :v.dispatch.treefn/dependencies
                                             set)]
                          (if (empty? dependents)
                            (conj all-dependents
@@ -40,18 +40,18 @@
         shaken-dag-with-inputs (reduce-kv (fn [ret k the-fn]
                                             (let [dependents (-> the-fn
                                                                  meta
-                                                                 :v.1.dispatch.treefn/dependencies)]
+                                                                 :v.dispatch.treefn/dependencies)]
                                               (assoc ret
-                                                k
-                                                (set dependents))))
+                                                     k
+                                                     (set dependents))))
                                           {}
                                           shaken-map)
         ;; map of keys->keys (remove input-keys so we call only functions)
         shaken-dag (reduce-kv (fn [ret k dependents]
                                 (assoc ret
-                                  k
-                                  (cs/difference dependents
-                                                 input-key-set)))
+                                       k
+                                       (cs/difference dependents
+                                                      input-key-set)))
                               {}
                               shaken-dag-with-inputs)
         ;; vector of keys of fms we will call
@@ -118,21 +118,21 @@
 
 (defn dismantlefm
   "dismantle map should include functions (fms) that dismantle the
-object passed in, also for bookkeeping, any entries in the map may
-also be used to determine what will be removed from the map after
-dismantling (handled externally).
+  object passed in, also for bookkeeping, any entries in the map may
+  also be used to determine what will be removed from the map after
+  dismantling (handled externally).
 
-If value-specific dismantle function is not provided, will also call
+  If value-specific dismantle function is not provided, will also call
   type specific Idismantle
 
-On dismantle exception, immediately gives up, this is a tradeoff in
+  On dismantle exception, immediately gives up, this is a tradeoff in
   that you can try to manually handle the case, extract debugging
   information, and then if so choose, continue the dismantle process
   by reinvoking with remaining objects
 
-dismantle-if, the returned fn, when called returns nil
+  dismantle-if, the returned fn, when called returns nil
 
-Might want to match the semantics of Stuart Sierra's component, where
+  Might want to match the semantics of Stuart Sierra's component, where
   construction or destruction returns the data again
   "
   [dismantle-map tree-fn]
@@ -163,11 +163,11 @@ Might want to match the semantics of Stuart Sierra's component, where
       {::dismantle-map dismantle-map})))
 
 (defn touched-children [tree-fn touched-nodes]
-  (v.1.algorithms.dag/touched-children (-> tree-fn
-                                           meta
-                                           ::dag
-                                           v.1.algorithms.dag/reverse-dag)
-                                       touched-nodes))
+  (v.algorithms.dag/touched-children (-> tree-fn
+                                         meta
+                                         ::dag
+                                         v.algorithms.dag/reverse-dag)
+                                     touched-nodes))
 
 (defn invalidate-entries
   "removes keys/vals of val-map that have been children of the recursively touched"
@@ -179,8 +179,8 @@ Might want to match the semantics of Stuart Sierra's component, where
 
 (defn dependencies->rev-edges
   "
-converts dependency graph into a graphviz friendly edge vector representing flow of data
-"
+  converts dependency graph into a graphviz friendly edge vector representing flow of data
+  "
   [direct-dependency-map]
   (->> (reduce-kv (fn add [ret k v]
                     (if (empty? v)
