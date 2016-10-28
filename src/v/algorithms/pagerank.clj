@@ -1,4 +1,4 @@
-(ns v.hophacks2016.pagerank)
+(ns v.algorithms.pagerank)
 
 (def d 0.85)
 
