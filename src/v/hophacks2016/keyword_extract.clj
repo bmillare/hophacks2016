@@ -5,9 +5,49 @@
             [v.dispatch.treefn :as tf]
             [clojure.set :as cs]))
 
+;; This file utilizes tree-functions, (tf), as a better way to compose
+;; complex operations (functions) as simply a merging of maps
+
+;; The user calling code will have to merge the different maps
+;; together and build the final composite function like the following:
+
+(comment
+  (def main-fn
+    (v.dispatch.treefn/treefm
+     (merge
+      v.hophacks2016.keyword-extract/open-nlp
+      v.hophacks2016.keyword-extract/np-chunking
+      v.hophacks2016.keyword-extract/keyword-candidates
+      v.hophacks2016.keyword-extract/keyword-connectivity
+      v.hophacks2016.keyword-extract/keyword-ranking)
+     :keyword.ranking/n-grams-ranking))
+
+  ;; And then call it like so
+  
+  (main-fn
+   {:keyword.opennlp.input/tokenize-model-name
+    "en-token"
+    :keyword.opennlp.input/pos-model-name
+    "en-pos-maxent"
+    :keyword.opennlp.input/sentences-model-name
+    "en-sent"
+    :keyword.input/txt
+    "The angry dog is walking across the street. Patrick has never had a donut."})
+
+  ;; Note that the output of each sub-function will be stored in the
+  ;; output of main-fn, so we might want to only extract the data of
+  ;; interest by specifying the correct key like so:
+
+  (:keyword.ranking/pagerank (main-fn input-map))
+
+  )
+
+;; ----------------------------------------------------------------------
+
 (defn suffix [model-name]
   (str model-name ".bin"))
 
+;; Builds open-nlp utilities from provided models
 (def open-nlp
   {:keyword.opennlp/tokenize-fn
    (tf/fm
@@ -67,6 +107,9 @@
                :input input}
               input)))))
 
+;; builds parser based on grammar used for extracting noun phrases (NPs)
+;; The grammar is defined using parsing expression grammars (PEGs)
+;; - a way to compose mini-parsers that act like regular expressions
 (def np-chunking
   {:keyword.np-chunking/parse-fn
    (let [JJ (peg/+ (peg/| (t "JJ") (t "JJR") (t "JJS") (t "VBG") (t "VBN")))

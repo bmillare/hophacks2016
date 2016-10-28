@@ -8,24 +8,26 @@
 (require '[v.dispatch.treefn]
          '[v.hophacks2016.keyword-extract])
 
-;; build aggregated get-keywords function who's root is :keyword.ranking/n-grams-ranking
+;; build aggregated the main get-keywords function who's root is :keyword.ranking/n-grams-ranking
 ;; see code in v/hophacks2016.keyword-extract.clj
+;; - We store this function in the var get-keywords
 (def get-keywords
   (v.dispatch.treefn/treefm
    (merge
-    v.hophacks2016.keyword-extract/open-nlp
-    v.hophacks2016.keyword-extract/np-chunking
-    v.hophacks2016.keyword-extract/keyword-candidates
-    v.hophacks2016.keyword-extract/keyword-connectivity
-    v.hophacks2016.keyword-extract/keyword-ranking)
+    v.hophacks2016.keyword-extract/open-nlp ; used for sentence splitting, tokenizing, and part of speech tagging
+    v.hophacks2016.keyword-extract/np-chunking ; used to extract noun phrases from tagged words
+    v.hophacks2016.keyword-extract/keyword-candidates ; aggregates noun phrase candidates by re-applying np-chunking to the words in each sentence, also builds supporting data structures (like sets)
+    v.hophacks2016.keyword-extract/keyword-connectivity ; builds connectivity of words using co-occurence of size 2
+    v.hophacks2016.keyword-extract/keyword-ranking) ; applies pagerank algorithm, also ranks candidates using the pagerank data
    :keyword.ranking/n-grams-ranking))
 
+;; Compute the result of get-keywords on the input map and store in var result
 (def result
   (get-keywords
    {
     ;; open-nlp specific parameters
     :keyword.opennlp.input/models-prefix
-    "/home/bmillare/dj/usr/src/hophacks2016/src/v/models"
+    "/home/bmillare/dj/usr/src/hophacks2016/src/v/models" ; alter this to your opennlp models directory
     :keyword.opennlp.input/tokenize-model-name
     "en-token"
     :keyword.opennlp.input/pos-model-name
