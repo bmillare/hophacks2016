@@ -19,7 +19,11 @@ Within the clojure REPL:
 (load "v/hophacks2016/bm-scratch")
 (:keyword.ranking/n-grams-ranking result)
 ```
+The output will be:
 
+```clojure
+([["cardiac" "action" "potentials"] 1.3994729154205503] [["used" "optogenetic" "tools"] 1.3778488435346672] [["available" "optogenetic" "tools"] 1.3778488435346672] [["cardiomyocyte" "electrical" "activity"] 1.358787446857419] [["optogenetic" "treatments"] 1.3269831640459446] [["Optical" "shortening"] 1.2548805858319163] [["cardiac" "disorders"] 1.1870146482689359] [["proton" "pump" "archaerhodopsin-3"] 1.144782537379599] [["ventricular" "cardiomyocytes"] 1.1235921601992676] [["promising" "strategy"] 1.1104127565646165] [["traditional" "electrical" "stimulation"] 1.0869285126694592] [["cultured" "neonatal" "rat"] 1.0831789157772558] [["higher" "temporal" "resolution"] 1.0331384003345274] [["light" "intensity"] 1.0] [["cryptophyte" "algae"] 1.0] [["pathophysiology" "research"] 1.0] [["repolarization" "phase"] 1.0] [["heart" "muscle"] 1.0] [["complete" "inhibition"] 0.9538610206445015] [["pharmacological" "interventions"] 0.9005847989964181] [["channelrhodopsins" "(ACRs"] 0.9005847989964181] [["greater" "photocurrents"] 0.8832599225183109] [["controlled" "shortening"] 0.8826140009659376] [["Optical" "control"] 0.8777915766206601] [["potential" "duration"] 0.8168945261873111] [["inhibitory" "currents"] 0.7516394661348487])
+```
 Feel free to modify v/hophacks2016/bm-scratch.clj to play with different inputs and parameters
 
 ## implementation
