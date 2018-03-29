@@ -1,5 +1,22 @@
 (ns v.algorithms.pagerank)
 
+;;; Pagerank
+;; - Famous algorithm by Larry Page (Google)
+;; - Ranks nodes in a graph by how much other nodes point to it (and recursively what points to those nodes)
+;;   - ranks nodes in graph by how much the rest of the graph point to it
+;; - measure of node importance/significance
+
+;; Given damping factor d (fraction), an actor will select a random
+;; link on page A d times, and will select some other page 1-d
+;; times. The actor will then select a node with pagerank X, fraction
+;; X times.
+
+;; Aka page rank gives probability distribution a random walk through
+;; network will end up on a given node
+
+;; Iterative algorithm
+;; (Want basic algorithm description in engligh)
+;; - (maybe also include simple math description)
 (def d 0.85)
 
 (defn simple-score
